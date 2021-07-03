@@ -10,9 +10,9 @@ jobs:
      - run:
          name: creating infra
          command: |
-         aws cloudformation deploy \
-           --template-file Resources.yml
-           --stack-name newstack
+           aws cloudformation deploy \
+             --template-file Resources.yml \
+             --stack-name newstack
 
 workflows:
   # Name the workflow "welcome"
