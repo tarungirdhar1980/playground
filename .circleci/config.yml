@@ -8,7 +8,7 @@ jobs:
     steps:
      - run:
          name: creating infra
-         command: ./Resources.yml
+         command: /home/tarun/playground/Resources.yml
 
 workflows:
   # Name the workflow "welcome"
