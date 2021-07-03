@@ -11,7 +11,7 @@ jobs:
          name: creating infra
          command: |
            aws cloudformation deploy \
-             --template-file Resources.yml \
+             --template-file newinfra.yml \
              --stack-name newstack
 
 workflows:
