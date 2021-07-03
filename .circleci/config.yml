@@ -16,7 +16,7 @@ jobs:
 
 workflows:
   # Name the workflow "welcome"
-  welcome:
+  hello:
     # Run the welcome/run job in its own container
     jobs:
       - create_infra
