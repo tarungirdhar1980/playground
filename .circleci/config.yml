@@ -6,9 +6,13 @@ jobs:
     docker:
      - image: amazon/aws-cli
     steps:
+     - checkout
      - run:
          name: creating infra
-         command: /home/tarun/playground/Resources.yml
+         command: |
+         aws cloudformation deploy \
+           --template-file Resources.yml
+           --stack-name newstack
 
 workflows:
   # Name the workflow "welcome"
