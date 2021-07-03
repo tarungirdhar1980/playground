@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   print_hello:
     docker:
-     - image: circleci:node:13.8.0
+     - image: circleci/node:13.8.0
     steps:
      - run:
          name: print hello world
