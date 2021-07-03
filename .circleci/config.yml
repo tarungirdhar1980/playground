@@ -2,17 +2,18 @@
 version: 2.1
 
 jobs:
-  print_hello:
+  create_infra:
     docker:
-     - image: circleci/node:13.8.0
+     - image: amazon/aws-cli
     steps:
      - run:
-         name: print hello world
-         command: echo "hello all"
+         name: creating infra
+         command: echo " running infra job resources.yml"
+         command: /home/tarun/playground/Resources.yml
 
 workflows:
   # Name the workflow "welcome"
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-      - print_hello
+      - create_infra
