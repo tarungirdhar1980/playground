@@ -8,8 +8,7 @@ jobs:
     steps:
      - run:
          name: creating infra
-         command: echo " running infra job resources.yml"
-         command: /home/tarun/playground/Resources.yml
+         command: ./Resources.yml
 
 workflows:
   # Name the workflow "welcome"
