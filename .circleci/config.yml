@@ -4,6 +4,7 @@ commands:
   destroy_environment:
     steps:
       - run:
+          when: on_fail
           name: Destroy environment
           command: |
             aws cloudformation delete-stack --stack-name my_stack
@@ -20,8 +21,7 @@ jobs:
             aws cloudformation deploy --template-file newinfra.yml --stack-name my_stack
       - run: return 1
       - destroy_environment
-        when: on_fail
-
+    
 workflows:
   my_workflow:
     jobs:
