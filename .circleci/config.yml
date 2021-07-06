@@ -1,46 +1,28 @@
 version: 2.1
 
+commands:
+  destroy_environment:
+    steps:
+      - run:
+          name: Destroy environment
+          command: |
+            aws cloudformation delete-stack --stack-name my_stack
+
 jobs:
-  configure_infrastructure:
+  create_infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: amazon/aws-cli
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints: ["8c:e5:41:de:cb:53:d8:4c:7c:3f:d4:22:b9:ad:ac:95"] # You can get this ID in section where you registered the SSH Key
       - run:
-          name: Install dependencies
+          name: Create Stack
           command: |
-            apk add --update ansible # install the dependencies needed for your playbook
-      - run:
-          name: find location
-          command: |
-            ls -ltr 
-      - run:
-          name: Configure server
-          command: |
-            ansible-playbook -i .circleci/inventory.txt .circleci/main-remote.yml
-  smoke_test:
-    docker:
-      - image: alpine:latest
-    steps:
-      - run: apk add --update curl
-      - run:
-          name: smoke test.
-          command: |
-            URL="http://54.218.165.181:3000"
-            if curl -s --head ${URL} # test if blog.udacity. com exists
-            then
-             return 0
-            else
-             return 1
-            fi
+            aws cloudformation deploy --template-file newinfra.yml --stack-name my_stack
+      - run: return 1
+      - destroy_environment
+        when: on_fail
 
 workflows:
   my_workflow:
     jobs:
-      - configure_infrastructure
-      - smoke_test:
-          requires:
-            - configure_infrastructure
-
+      - create_infrastructure
