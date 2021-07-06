@@ -20,8 +20,27 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i .circleci/inventory.txt .circleci/main-remote.yml
+  smoke_test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run: apk add --update curl
+      - run:
+          name: smoke test.
+          command: |
+            URL="https://35.161.13.126:3000"
+            if curl -s --head ${URL} # test if blog.udacity. com exists
+            then
+             return 0
+            else
+             return 1
+            fi
 
 workflows:
   my_workflow:
     jobs:
       - configure_infrastructure
+      - smoke_test:
+          requires:
+            - configure_infrastructure
+
