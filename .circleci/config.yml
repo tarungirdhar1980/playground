@@ -13,6 +13,10 @@ jobs:
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
       - run:
+          name: find location
+          command: |
+            ls -ltr 
+      - run:
           name: Configure server
           command: |
             ansible-playbook -i inventory.txt main-remote.yml
